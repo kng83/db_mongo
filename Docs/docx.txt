@@ -1,1 +1,24 @@
 To sa dokumenty do pliku
+
+Operacje CRUD = Create Read Update Destroy
+
+// connect to data base user_test (user_test to baza danych)
+// mongo i mongoose stworza ta baze jezeli jej nie ma
+mongoose.connect('mongodb://localhost/user_test');
+
+//ponizej sa dwa eventy od mongoose open i on
+mongoose.connection
+    .once('open', () => console.log('Good to go !'))
+    .on('error', (error) => {
+        console.warn('Warning', error);
+    });
+
+//fat arrow => skin arrow ->
+
+//Jezeli jest baza danych mongo to robi sie Model (user_model) a do niego dolacza sie
+// schemat (schema) => instance a na podstawie niego instancje ktore beda Jego wpisami
+
+//Pokazna deklaracja schematu (oczekujemy ze nasz model bedzie mial schemat pasujacy do danych
+
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
