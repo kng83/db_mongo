@@ -1,9 +1,8 @@
 {
   "name": "users",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
-  "target":"es6",
+  "target": "es6",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,5 +12,18 @@
     "mocha": "^4.0.1",
     "mongoose": "^4.13.6",
     "nodemon": "^1.12.5"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kng83/db_mongo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kng83/db_mongo/issues"
+  },
+  "homepage": "https://github.com/kng83/db_mongo#readme",
+  "description": ""
 }
