@@ -26,3 +26,5 @@ const UserSchema = new Schema ({objekt});
 
 const User= mongoose.model('user', UserSchema) - tworzenie modelu
 reguire ('assert') (assert - dowiedziec sie twierdzenie) => do sprawdzania czy twierdzenie ok
+
+//w testach dajemy script "test" : "mocha" jak puszczamy test to caly folder test jest brany pod uwagę

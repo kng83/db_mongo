@@ -13,4 +13,4 @@ const UserSchema = new Schema({
 //Mongoogse zaklada sam ta kolekcje.
 const User = mongoose.model('user', UserSchema);
 
-model.exports = User;
+module.exports = User;
