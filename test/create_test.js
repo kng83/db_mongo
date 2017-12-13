@@ -16,6 +16,7 @@ describe('Creating records', ()=>{
                 //mongoose daje nam flage isNew (jest true gdy jest tylko w mocha a false gdy jest bazie i moche)
                 //musimy tu dodac done bo odpowiedz jest asynchroniczna
                 assert(!joe.isNew);
+                console.log()
                 done();
             });
     });

@@ -4,19 +4,20 @@
   "main": "index.js",
   "target": "es6",
   "scripts": {
-    "test": "mocha"
+    "test1": "mocha",
+    "test": "nodemon --exec \" mocha -R min \" "
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/mongoose": "^4.7.29",
+    "mocha": "^4.0.1",
     "nodemon": "^1.12.5"
   },
   "directories": {
     "test": "test"
   },
   "dependencies": {
-    "mocha": "^4.0.1",
     "mongoose": "^4.13.7"
   },
   "repository": {
