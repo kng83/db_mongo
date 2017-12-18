@@ -5,9 +5,18 @@ const Schema = mongoose.Schema;
 // String to nie jest specjalna zmienna caly node ma niej dostęp
 // W wykladzie 7 dodajemy nowa wlasciwosc  postCount
 // W wykladzie 7 aby zrobic validacje zamieniamy typ string na obiekt (validacja zajmuje sie mongoose
+// Dodajemy validacje na ilosc liter w imieniu. Dokladamy wlasciwosc valideate i w niej funkcje validator
+// w niej musimy zwrocic true lub false gdzie true to valid
+
 const UserSchema = new Schema({
     name: {
         type: String,
+        validate: {
+            validator: (name)=>{
+                return (name.length >2);
+            },
+            message: 'Name must be longer than 2 characters.'
+        },
         required: [true, 'Name is required.']
     },
     postCount: Number
