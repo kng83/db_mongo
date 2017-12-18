@@ -44,3 +44,14 @@ User.findOne(criteria) --> szuka pierwszego co spelnia kryteria zwraca rekord
  b)model instance
  remove
  */
+
+ //mongoose operuje na dokumentach nasz user jest dokumentem a post'y beda
+ //subdokumentami
+
+ //virtual type/properties sa type ktore nie wystepuja
+ //w bazie danych ale w mongoose np. postCount ktory,
+ //liczy posty bedzie wygodniejszy na stronie servera a ni
+ //na stronie bazy danych
+
+ //jezeli w mochce damy zamiast it xit to mocha to ominie
+ //jest to test niedokonczony

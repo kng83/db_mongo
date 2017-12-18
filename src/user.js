@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const PostSchema = require('./post');
 const Schema = mongoose.Schema;
 
 //wykonanie modelu uzytkowanika UserSchema jest tylko jego czescia
@@ -7,6 +8,8 @@ const Schema = mongoose.Schema;
 // W wykladzie 7 aby zrobic validacje zamieniamy typ string na obiekt (validacja zajmuje sie mongoose
 // Dodajemy validacje na ilosc liter w imieniu. Dokladamy wlasciwosc valideate i w niej funkcje validator
 // w niej musimy zwrocic true lub false gdzie true to valid
+// W rozdziale 8 do naszego schematu tutaj dodajemy schemat post
+// Dodajemy go jako tablice do wlasciwosci posts
 
 const UserSchema = new Schema({
     name: {
@@ -19,7 +22,19 @@ const UserSchema = new Schema({
         },
         required: [true, 'Name is required.']
     },
-    postCount: Number
+    //to bylo stare
+   // postCount: Number,
+    posts: [PostSchema],
+    likes: Number
+});
+
+//tu tworzymy virtualny typ i co uzytkownik ma
+//z tym zrobic. Nie moze byc fat arrow.
+//virtual typ uzywa getterow i setterow
+//zwracajac this odnosi sie do instancji naszego modelu
+//dostajemy nawet id
+UserSchema.virtual('postCount').get(function () {
+    return this.posts.length;
 });
 
 //deklaracja calego modelu i dodanie do niego schematu
