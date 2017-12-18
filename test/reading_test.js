@@ -40,6 +40,7 @@ describe('Reading users out of the database',() =>{
             // tu mamay pojedynczy rekord dlatego user
             .then((user) =>{
                 assert(user.name ==='Joe');
+                console.log('findOne Ok');
                 done();
             });
     });

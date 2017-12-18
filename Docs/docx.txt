@@ -35,3 +35,12 @@ User.findOne(criteria) --> szuka pierwszego co spelnia kryteria zwraca rekord
 
 //skrypt z nodemonem i mocha ciewkawy exec
  "test": "nodemon --exec \" mocha -R min \" "
+
+ /*Nastepujace mozliwosci usuwania danych :
+ a)model class
+ * -remove
+ * -findOneAndRemove
+ * -findByIdAndRemove
+ b)model instance
+ remove
+ */
