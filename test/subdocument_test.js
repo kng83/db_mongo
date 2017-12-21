@@ -12,6 +12,7 @@ describe('Subdocuments', () =>{
             .then(() => User.findOne({name: 'Joe'}))
             .then((user)=>{
                 assert(user.posts[0].title ==='PostTitle');
+                console.log('can create don');
                 done();
             });
     });
@@ -31,7 +32,7 @@ describe('Subdocuments', () =>{
         //create joe
         const joe = new User({
             name: 'Joe',
-            post: []
+            posts: []
         });
         //save joe
         joe.save()
@@ -39,8 +40,8 @@ describe('Subdocuments', () =>{
             .then(() => User.findOne({name: 'Joe'}))
             .then((user) =>{
                 //add post to joe
-                user.posts.push({title:'New post'});
-                user.posts.push({title:'Second Post'})
+               user.posts.push({title:'New post'});
+               user.posts.push({title:'Second Post'});
                 //save Joe
                 return user.save(); //by zworcic promis
             })
@@ -51,7 +52,7 @@ describe('Subdocuments', () =>{
                 done();
             });
     });
-    it('can remove an existing subdocument',(done) =>{
+    it('can remove an existing subdocument ',(done) =>{
         const joe = new User ({
             name: 'Joe',
             posts: [{title: 'New Title'}]
@@ -70,6 +71,7 @@ describe('Subdocuments', () =>{
             .then(() => User.findOne({name: 'Joe'}))
             .then((user) =>{
                 assert(user.posts.length === 0);
+                console.log('can remove done');
                 done();
             })
     });

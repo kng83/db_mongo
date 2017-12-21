@@ -23,10 +23,13 @@ const UserSchema = new Schema({
         required: [true, 'Name is required.']
     },
     //to bylo stare
-   // postCount: Number,
+    // postCount: Number,
+    //w nowej wersji mongo by uniknac bledu pusha w subdocument.js nalezy dodac
+    //opcje usePushEach do opcji schematu
     posts: [PostSchema],
     likes: Number
-});
+
+},{usePushEach:true});
 
 //tu tworzymy virtualny typ i co uzytkownik ma
 //z tym zrobic. Nie moze byc fat arrow.
