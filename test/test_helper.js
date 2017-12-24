@@ -34,9 +34,18 @@ before((done)=>{
 // beforeEach jest tak zwanym hookiem
 beforeEach((done) => {
     // funcja usuwania kolekcji naszej jest promise poniewaz mongoose potrzebuje czasu na laczenie z mongo
-    // dodajemy done callback aby opoznic uruchominie reszty kodu
-    mongoose.connection.collections.users.drop(()=>{
-        //gotowy do uruchomienia nastepnego testu
-        done();
+    // dodajemy done callback aby opoznic uruchomini
+    //Musimy tutaj zrobic dropa wszystkich kolekcji aby testy
+    //byly resetowane prawidlowo u gory skladni ES6 do uproszczenia kodu
+    //to jest dropowanie kolekcja po kolekcji w sekwencji
+    //mongo moze tylko dropowac 1 kolekcje w jednym momencie
+    //mongo zamienia zawsze kolekcje na male litery
+    const {users, comments, blogposts} = mongoose.connection.collections;
+    users.drop(()=>{
+        comments.drop(()=>{
+            blogposts.drop(()=>{
+                done();
+            });
+        });
     });
 });

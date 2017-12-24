@@ -27,7 +27,11 @@ const UserSchema = new Schema({
     //w nowej wersji mongo by uniknac bledu pusha w subdocument.js nalezy dodac
     //opcje usePushEach do opcji schematu
     posts: [PostSchema],
-    likes: Number
+    likes: Number,
+    blogPosts: [{
+        type: Schema.Types.ObjectId,
+        ref:'blogPost'
+    }]
 
 },{usePushEach:true});
 
