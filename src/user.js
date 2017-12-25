@@ -44,6 +44,23 @@ UserSchema.virtual('postCount').get(function () {
     return this.posts.length;
 });
 
+//Middleware wystepuja przed i po event. W mongoose nazywamy je pre i post .
+//Np z usuwaniem uzytkownika czyscimy jego posty by pozniej go usunac
+//Patrz na event remove i zanim on wystapi to uruchom ta funkcje
+//Jest tu problem ze require moze byc w blogPoscie do usera i tu do blogposta i to moze sie chrznic dlatego
+//pobieramy  tu model dla blogPosta (cyclic loading issue mozemy trafic)
+//Problem jest bo mamy tablice id w blogPost i  chcemy usunac ja cala w relacji do kasowanego uzytkownika
+//Bedziemy tu uzywac query operator "in", cos jak uzywalismy "$inc"
+//in operator mowi przejedz sie po blogPoscie i znajdz wszystkie jego _id
+//sekcja 10 wyklad 65
+//musi byc next bo to jest asynchroniczne i zeby kontynuowac
+UserSchema.pre('remove', function(next){
+    //this  === joe
+    const BlogPost = mongoose.model('blogPost');
+    BlogPost.remove({_id: {$in: this.blogPosts}})
+        .then(() => next());
+});
+
 //deklaracja calego modelu i dodanie do niego schematu
 //deklaracja kolekcji i przypisanie jej schematu UserSchema
 //to jest cala koleckja bazy nie tylko obiekt user.

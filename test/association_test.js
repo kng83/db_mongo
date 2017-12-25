@@ -63,7 +63,7 @@ describe('Associations',()=>{
     //populate dziala tak ze wchodzimy do blogposta idziemy level dalej zeby dostac
     //sie do jego relacji
 
-    it.only('saves a full relation graph', (done)=>{
+    it('saves a full relation graph', (done)=>{
         User.findOne({name: 'Joe'})
             .populate({
 
@@ -87,6 +87,8 @@ describe('Associations',()=>{
                 done();
             });
     });
+
+
 });
 
 
