@@ -2,12 +2,13 @@ const mongoose = require('mongoose');
 const User = require('../src/user');
 const Comment =require('../src/comment');
 const BlogPost = require('../src/blogPost');
+const assert = require('assert');
 
 describe('Associations',()=>{
     let joe, blogPost, comment;
     beforeEach((done) =>{
         joe = new User ({name: 'Joe'});
-        blogPost = new BlogPost({title:'JS is Great', content:'Yep he\'s great'});
+        blogPost = new BlogPost({title:'JS is Great', content:"Pawel he's great"});
         comment = new Comment({content: 'Congrats on great post'});
 
         //robimy teraz assocjacje ze blogPost nalezy do joe
@@ -42,11 +43,47 @@ describe('Associations',()=>{
     //zrobic uzyc innego query (wstawimy modifier midzy instrukcje a then
     //query w database jest wykonywane tylko wtedy gdy jest then
     //User.findOne({name:'Joe'}).modifier.then();
-    it.only('saves a relation between a user and a blogpost', (done)=>{
+    //Nie mozemy w mongo miec wszystkiego jezeli robimy asocjacje z blogpostem to nie
+    //mozemy rownoczesnie robic assocjacji z comment
+
+    it('saves a relation between a user and a blogpost', (done)=>{
         User.findOne({name: 'Joe'})
             .populate('blogPosts') //modyfikator i odnosi sie do referncji
             .then((user) =>{
-                console.log(user);
+                assert(user.blogPosts[0].title ==='JS is Great')
+               // console.log(user.blogPosts[0]);
+                done();
+            });
+    });
+
+    //Tutaj chcemy ladowac user'a blogposta i comments zeby miec dostep do
+    //wszystkiego. Tutaj w populate przekazujemy object nie jak wyzej tylko referncje
+    //do blogPosts
+    //path dziala podobnie do teog co wyzyej czyli kojarzy z kluczem
+    //populate dziala tak ze wchodzimy do blogposta idziemy level dalej zeby dostac
+    //sie do jego relacji
+
+    it.only('saves a full relation graph', (done)=>{
+        User.findOne({name: 'Joe'})
+            .populate({
+
+                path:'blogPosts', //load the associations blogPost
+                populate:{ //inside of the blogpost find associations with comments
+                    path:'comments',
+                    model:'comment', //musimy dodac tu model comment
+                    populate:{
+                        path:'user', //idziemy glebiej by dostac sie do uzytkownika
+                        model:'user'
+                    }
+                }
+
+            })
+            .then((user)=>{
+                // console.log(user.blogPosts[0].comments[0]);
+                assert(user.name === 'Joe');
+                assert(user.blogPosts[0].title ==='JS is Great');
+                assert(user.blogPosts[0].comments[0].content === 'Congrats on great post');
+                assert(user.blogPosts[0].comments[0].user.name === 'Joe');
                 done();
             });
     });
