@@ -59,7 +59,7 @@ describe('Associations',()=>{
     //Tutaj chcemy ladowac user'a blogposta i comments zeby miec dostep do
     //wszystkiego. Tutaj w populate przekazujemy object nie jak wyzej tylko referncje
     //do blogPosts
-    //path dziala podobnie do teog co wyzyej czyli kojarzy z kluczem
+    //path dziala podobnie do tego co wyzej czyli kojarzy z kluczem
     //populate dziala tak ze wchodzimy do blogposta idziemy level dalej zeby dostac
     //sie do jego relacji
 

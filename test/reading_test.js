@@ -4,14 +4,23 @@ const User = require('../src/user');
 
 
 /*Test szukajacy uzytkownika w tym celu dajemy beforecha poniewaz baza danych jest najpierw czyszczona
-* w funkcji test_helper*/
+* w funkcji test_helper
+* do testu pagination dodajemy uzytkownikow. Musimy zapisac ich rownolegle i dopiero wtedy dac callback done*/
 
 describe('Reading users out of the database',() =>{
     let joe; //ze wzgledu na scope
+    let maria, alex, zach;
 
     beforeEach((done)=>{
+        alex = new User({name: 'Alex'});
         joe = new User ({name: 'Joe'});
-        joe.save()
+        maria = new User({name: 'Maria'});
+        zach = new User({name: 'Zach'});
+
+        //Zapisanie wiele rekordow na raz aby dostac odpowiedz jedna o stanie zapisu
+        //Wczesnie bylo   //joe.save()
+        //Nie mamy tu pewnosc czy wszycy zostana zapisanie w tej samej kolejnosci
+        Promise.all([joe.save(),alex.save() , maria.save(), zach.save()])
             .then(() => done());
     });
 
@@ -42,6 +51,26 @@ describe('Reading users out of the database',() =>{
                 assert(user.name ==='Joe');
                 console.log('findOne Ok');
                 done();
+            });
+    });
+
+    //Testujemy skip and reading. Mozna to uzyc np do pagination
+    //skip - pomija pewna liczbe rekordow
+    //limit - wyswietla pewna liczbe rekordow
+
+    it('can skip and limit the result set', (done) =>{
+        //-Alex Joe Maria -Zach (tak bedzie to wygladac (opuszczmy 1 i wyswietlamy 2)
+        //Poniewaz nie mamy pewnosci co zostanie zapisane w odpowiedniej kolejnosci musimy
+        //uzyc modyfikatora sort przez imie 1-znaczy ze kolejnosc A B C (-1) to wtedy Z Y X ..
+        User.find({})
+            .sort({name:1})
+            .skip(1)
+            .limit(2)
+            .then((users)=>{
+                assert(users.length === 2);
+                assert(users[0].name === 'Joe');
+                assert(users[1].name === 'Maria');
+                done(); // //
             });
     });
 });
